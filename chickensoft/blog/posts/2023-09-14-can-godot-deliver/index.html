@@ -1,0 +1,1817 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="While Unity continues to break the trust of its users, Godot is promising to be the free and open "game engine you've been waiting for." But can it deliver?
+">
+      
+      
+        <meta name="author" content="Contributors">
+      
+      
+        <link rel="canonical" href="https://username.github.io/repository/chickensoft/blog/posts/2023-09-14-can-godot-deliver/">
+      
+      
+        <link rel="prev" href="../2023-04-26-gdscript-vs-csharp/">
+      
+      
+        <link rel="next" href="../2023-12-01-game-architecture/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Can Godot Deliver on Its Promise? - Coding Knowledge Archive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-godot-gold-rush" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Coding Knowledge Archive" class="md-header__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Coding Knowledge Archive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Can Godot Deliver on Its Promise?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  Chickensoft
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../license/" class="md-tabs__link">
+        
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Coding Knowledge Archive" class="md-nav__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Coding Knowledge Archive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chickensoft
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chickensoft
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../philosophy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Philosophy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introspection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introspection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    How C# Works in Godot
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            How C# Works in Godot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how_csharp_works_in_godot/how_csharp_works_in_godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    #️⃣ How C# Works in Godot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Logic Blocks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Logic Blocks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧠 LogicBlocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/01_why/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🤨 Why Logic Blocks?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/02_installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📦 Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/03_quick_start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🚀 Quick Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/07_serialization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💾 Serialization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/08_tips_and_tricks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪄 Tips and Tricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_7" id="__nav_2_6_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    04 basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            04 basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧮 Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/01_inputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📥 Inputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/02_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/03_outputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📤 Outputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/04_errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ❌ Errors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/05_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_8" id="__nav_2_6_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    05 tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            05 tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏲️ Timer Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/01_timer_logic_block/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧊 Timer Logic Block
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/02_power/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔆 Power
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/03_coundown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏳ Countdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/04_beeping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏰ Beeping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9" id="__nav_2_6_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    06 testing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            06 testing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧪 Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/01_testing_logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💡 Testing Logic Blocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/02_testing_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 Testing States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/03_testing_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Testing Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_7_1" id="__nav_2_7_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Posts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Posts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-07-03-indie-game-godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    It's time to make that indie C# game in Godot.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-11-27-godot-unity-alternative/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Godot and C#: A Viable Unity Alternative
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-04-26-gdscript-vs-csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDScript vs C# Performance Comparison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Can Godot Deliver on Its Promise?
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Can Godot Deliver on Its Promise?
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-godot-gold-rush" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 The Godot Gold Rush
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unitys-crisis-of-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛑 Unity's Crisis of Trust
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enter-godot-the-peoples-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌱 Enter Godot: The People's Engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-state-of-godot-in-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 The State of Godot in 2023
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-godot-truly-replace-unity" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Can Godot Truly Replace Unity?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-experience-with-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 My Experience with Godot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#will-godot-seize-the-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Will Godot Seize the Moment?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏆 The Verdict
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-12-01-game-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Game Architecture for Fun and Profit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024-01-01-godot-csharp-2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Godot with C# in 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024-06-11-serialization-for-csharp-games/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serialization for C# Games
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2025-02-18-display-scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Solving Game Display Scaling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-godot-gold-rush" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 The Godot Gold Rush
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unitys-crisis-of-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛑 Unity's Crisis of Trust
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enter-godot-the-peoples-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌱 Enter Godot: The People's Engine
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-state-of-godot-in-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔍 The State of Godot in 2023
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-godot-truly-replace-unity" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Can Godot Truly Replace Unity?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-experience-with-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧰 My Experience with Godot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#will-godot-seize-the-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Will Godot Seize the Moment?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-verdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏆 The Verdict
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Can Godot Deliver on Its Promise?</h1>
+
+<p><img alt="While Unity continues to break the trust of its users, Godot is promising to be the free and open 'game engine you've been waiting for.' But can it deliver?" src="header.jpg" /></p>
+<p>In the wake of Unity's latest debacle (introducing a runtime fee that will charge developers for each game installation), the Godot Engine is enjoying an unprecedented surge in attention. But will Godot be able to meet the expectations of thousands of developers looking for a Unity replacement?</p>
+<!-- truncate -->
+
+<h2 id="the-godot-gold-rush">🌟 The Godot Gold Rush</h2>
+<p>Unity, once beloved in the indie game development community, is having its reputation dismantled in record time. On September 12, 2023, Unity announced a new <a href="https://blog.unity.com/news/plan-pricing-and-packaging-updates">Runtime Fee</a> that would charge developers for each time their game is installed after reaching certain thresholds. The change would apply retroactively to developers who have already published games.</p>
+<p>The fallout was immediate. In the 48 hours after the announcement:</p>
+<ul>
+<li>Unity's stock fell over 20%</li>
+<li>"How to refund Unity Pro" became a trending search term</li>
+<li>Developers began mass-migration to Discord channels, forums, and social media groups dedicated to Unity alternatives</li>
+</ul>
+<p>The largest beneficiary of this exodus? <a href="https://godotengine.org">Godot Engine</a>, the free and open-source game development platform.</p>
+<h2 id="unitys-crisis-of-trust">🛑 Unity's Crisis of Trust</h2>
+<p>Unity's decision represents more than just a pricing change — it's a fundamental breach of trust with their developer community. Here's why:</p>
+<ol>
+<li>
+<p><strong>Retroactively changing the rules</strong>: Developers who built their entire business models based on one payment structure are now being told the rules have changed after they've already published.</p>
+</li>
+<li>
+<p><strong>Impossible tracking requirements</strong>: Unity requires tracking installations, but hasn't provided a reliable way to do this, especially for games distributed through bundles, subscriptions, or physical media.</p>
+</li>
+<li>
+<p><strong>Punishing success</strong>: The fee specifically targets successful games, effectively becoming a "success tax" that wasn't part of the original agreement.</p>
+</li>
+<li>
+<p><strong>Unclear definitions</strong>: Terms like "installation" remain poorly defined, creating uncertainty for developers about their potential financial obligations.</p>
+</li>
+</ol>
+<p>But perhaps most damaging is the way this change was communicated: suddenly, without developer consultation, and defended with corporate double-speak even as the gaming community erupted in outrage.</p>
+<h2 id="enter-godot-the-peoples-engine">🌱 Enter Godot: The People's Engine</h2>
+<p>Against this backdrop, Godot is positioned as the ethical alternative. It offers:</p>
+<ul>
+<li><strong>Truly free licensing</strong>: MIT license with no royalties, no runtime fees, and no subscription costs</li>
+<li><strong>Open governance</strong>: Development is overseen by a non-profit foundation</li>
+<li><strong>Transparent roadmap</strong>: Future plans are discussed openly with the community</li>
+<li><strong>No investor pressure</strong>: No VCs or shareholders demanding increased monetization</li>
+</ul>
+<p>For developers burned by Unity's decisions, these factors make Godot extremely attractive. But can it actually deliver as a Unity replacement?</p>
+<h2 id="the-state-of-godot-in-2023">🔍 The State of Godot in 2023</h2>
+<p>Godot 4.0 released in March 2023, bringing significant improvements:</p>
+<ul>
+<li><strong>New rendering engine</strong>: Vulkan support, significantly improved 3D capabilities</li>
+<li><strong>Better performance</strong>: Improved CPU/GPU utilization</li>
+<li><strong>Enhanced physics</strong>: New physics engine with better stability</li>
+<li><strong>C# improvements</strong>: Better integration of C# scripting support</li>
+</ul>
+<p>The engine has come a long way, but several challenges remain:</p>
+<ol>
+<li><strong>Documentation gaps</strong>: While improving, documentation still has holes, especially for advanced features</li>
+<li><strong>Ecosystem maturity</strong>: Asset marketplace and plugin ecosystem is still developing</li>
+<li><strong>Optimization challenges</strong>: Performance optimizations often require more manual work than in Unity</li>
+<li><strong>Console support</strong>: Official console export is still being developed</li>
+</ol>
+<h2 id="can-godot-truly-replace-unity">🔮 Can Godot Truly Replace Unity?</h2>
+<p>For many developers, especially indies, Godot is already capable of meeting their needs. Games like <a href="https://store.steampowered.com/app/1637320/Dome_Keeper/">Dome Keeper</a>, <a href="https://store.steampowered.com/app/1716360/Ex_Astris/">Ex Astris</a>, and <a href="https://store.steampowered.com/app/1942280/Brotato/">Brotato</a> demonstrate that commercial success is possible.</p>
+<p>However, certain types of developers may face challenges:</p>
+<ul>
+<li><strong>AAA studios</strong>: May find Godot lacks some enterprise-level features</li>
+<li><strong>Mobile-focused devs</strong>: Unity still offers more streamlined mobile optimization tools</li>
+<li><strong>Teams with extensive Unity expertise</strong>: Face a learning curve when switching</li>
+</ul>
+<p>The good news is that Godot's development pace is accelerating. The project has seen:</p>
+<ul>
+<li>Increased funding (though still a fraction of Unity's resources)</li>
+<li>Growing corporate interest and sponsorship</li>
+<li>Expanding contributor base, especially after Unity's announcement</li>
+</ul>
+<h2 id="my-experience-with-godot">🧰 My Experience with Godot</h2>
+<p>I've been using Godot for several years, primarily with C#. My perspective is that:</p>
+<ol>
+<li>
+<p><strong>C# support is solid but requires knowledge</strong>: Working with C# in Godot is entirely possible (and in some ways preferable), but requires understanding how the integration works.</p>
+</li>
+<li>
+<p><strong>Documentation is improving</strong>: The official docs get better with each release, and community resources are filling the gaps.</p>
+</li>
+<li>
+<p><strong>The editor is highly productive</strong>: Once you adapt to Godot's workflow, many tasks become more streamlined than in Unity.</p>
+</li>
+<li>
+<p><strong>Community support is exceptional</strong>: The Godot community is incredibly helpful and welcoming to newcomers.</p>
+</li>
+</ol>
+<h2 id="will-godot-seize-the-moment">🚀 Will Godot Seize the Moment?</h2>
+<p>Godot has an unprecedented opportunity right now. The project is seeing:</p>
+<ul>
+<li>Record numbers of GitHub stars and forks</li>
+<li>All-time high download numbers</li>
+<li>Explosion of tutorial content and community resources</li>
+<li>Increased financial support through donations</li>
+</ul>
+<p>But success isn't guaranteed. The project will need to:</p>
+<ol>
+<li><strong>Rapidly improve onboarding</strong>: Make the transition for Unity developers as smooth as possible</li>
+<li><strong>Address enterprise needs</strong>: Develop features needed by larger teams</li>
+<li><strong>Maintain focus</strong>: Resist feature bloat while addressing critical gaps</li>
+<li><strong>Leverage the community</strong>: Channel the current enthusiasm into sustainable contribution</li>
+</ol>
+<h2 id="the-verdict">🏆 The Verdict</h2>
+<p>Can Godot deliver on its promise to be the game engine we've been waiting for? I believe the answer is <strong>yes for many developers, eventually for most others</strong>.</p>
+<p>The engine is already capable enough for a wide range of games. What it lacks in features, it makes up for in freedom, flexibility, and community goodwill. And unlike proprietary engines, its open nature means that progress benefits everyone equally — there's no risk of surprise runtime fees or other unwelcome changes to the core business model.</p>
+<p>For those considering the switch, now is the perfect time to begin learning Godot. Even if it doesn't meet all your needs today, the pace of development suggests it will continue closing the gap with remarkable speed.</p>
+<p>As for Unity, they've created an opening that Godot and other alternatives will eagerly fill. The coming months will show whether Unity understands the damage they've done to their brand and developer relationships — and whether any response they offer will be enough to regain the trust they've lost.</p>
+<p><em>If you've recently switched to Godot and are looking for resources, especially for C# development, check out <a href="https://chickensoft.games">Chickensoft's open source packages</a> and our <a href="https://discord.gg/gSjaPgMmYW">Discord community</a>.</em></p>
+<p>Join our Discord: <a href="https://discord.gg/gSjaPgMmYW">https://discord.gg/gSjaPgMmYW</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2409 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive archive of useful coding information and resources">
+      
+      
+        <meta name="author" content="Contributors">
+      
+      
+        <link rel="canonical" href="https://username.github.io/repository/chickensoft/setup/">
+      
+      
+        <link rel="prev" href="../philosophy/">
+      
+      
+        <link rel="next" href="../introspection/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>🏁 Godot C# Setup Guide - Coding Knowledge Archive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-the-net-sdk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Coding Knowledge Archive" class="md-header__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Coding Knowledge Archive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🏁 Godot C# Setup Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  Chickensoft
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../license/" class="md-tabs__link">
+        
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Coding Knowledge Archive" class="md-nav__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Coding Knowledge Archive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chickensoft
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chickensoft
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../philosophy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Philosophy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-net-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Installing the .NET SDK
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control-with-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⏳ Version Control with Git
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shell-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥 Shell Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🖥 Shell Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-shell-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      👩‍💻 Which shell should I use?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Installing Godot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤖 Installing Godot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-with-godotenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      🦾 Installing with GodotEnv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      😓 Installing Manually
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#godot-installation-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      📍 Godot Installation Path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⌨️ Visual Studio Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⌨️ Visual Studio Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 VSCode Extensions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vscode-settings-for-godot-and-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 VSCode Settings for Godot and C#
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-godot-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Creating Godot Projects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Creating Godot Projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-godot-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Creating a Godot Game
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-reusable-nuget-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Creating a Reusable Nuget Package
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-dev-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Dev Containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-chickensofts-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Chickensoft's Templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-c-package-for-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a C# Package for Godot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-container-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a Container Registry
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introspection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introspection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    How C# Works in Godot
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            How C# Works in Godot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_csharp_works_in_godot/how_csharp_works_in_godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    #️⃣ How C# Works in Godot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Logic Blocks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Logic Blocks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧠 LogicBlocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/01_why/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🤨 Why Logic Blocks?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/02_installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📦 Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/03_quick_start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🚀 Quick Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/07_serialization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💾 Serialization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/08_tips_and_tricks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪄 Tips and Tricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_7" id="__nav_2_6_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    04 basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            04 basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧮 Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/01_inputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📥 Inputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/02_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/03_outputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📤 Outputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/04_errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ❌ Errors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/04_basics/05_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_8" id="__nav_2_6_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    05 tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            05 tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/05_tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏲️ Timer Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/05_tutorial/01_timer_logic_block/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧊 Timer Logic Block
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/05_tutorial/02_power/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔆 Power
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/05_tutorial/03_coundown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏳ Countdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/05_tutorial/04_beeping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏰ Beeping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9" id="__nav_2_6_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    06 testing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            06 testing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/06_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧪 Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/06_testing/01_testing_logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💡 Testing Logic Blocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/06_testing/02_testing_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 Testing States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logic_blocks/06_testing/03_testing_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Testing Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7_1" id="__nav_2_7_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Posts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Posts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2022-07-03-indie-game-godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    It's time to make that indie C# game in Godot.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2022-11-27-godot-unity-alternative/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Godot and C#: A Viable Unity Alternative
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2023-04-26-gdscript-vs-csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDScript vs C# Performance Comparison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2023-09-14-can-godot-deliver/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Can Godot Deliver on Its Promise?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2023-12-01-game-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Game Architecture for Fun and Profit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2024-01-01-godot-csharp-2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Godot with C# in 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2024-06-11-serialization-for-csharp-games/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serialization for C# Games
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/posts/2025-02-18-display-scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Solving Game Display Scaling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-the-net-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Installing the .NET SDK
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control-with-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⏳ Version Control with Git
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shell-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥 Shell Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🖥 Shell Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-shell-should-i-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      👩‍💻 Which shell should I use?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Installing Godot
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤖 Installing Godot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-with-godotenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      🦾 Installing with GodotEnv
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-manually" class="md-nav__link">
+    <span class="md-ellipsis">
+      😓 Installing Manually
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#godot-installation-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      📍 Godot Installation Path
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-studio-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⌨️ Visual Studio Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⌨️ Visual Studio Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔌 VSCode Extensions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vscode-settings-for-godot-and-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 VSCode Settings for Godot and C#
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-godot-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ Creating Godot Projects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Creating Godot Projects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-godot-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Creating a Godot Game
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-reusable-nuget-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Creating a Reusable Nuget Package
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-dev-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Dev Containers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-chickensofts-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using Chickensoft's Templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-c-package-for-godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a C# Package for Godot
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-container-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using a Container Registry
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Setup</h1>
+
+<p>If you have the .NET SDK installed, Godot 4 provides a pretty good out-of-the-box development experience — but you'll need to follow some additional steps if you want to configure your environment to simplify IDE integration and command-line usage.</p>
+<p>Ready to make games with Godot and C#? Let's start by making sure your development environment is ready to go!</p>
+<blockquote>
+<p>If you get stuck on a step or want to inform us about incorrect or outdated documentation, please <a href="https://discord.gg/MjA6HUzzAE">join us on Discord</a>.</p>
+</blockquote>
+<p>:::tip
+This guide is specific to <strong>Godot 4</strong> — all Chickensoft packages have officially migrated to Godot 4.
+:::</p>
+<h2 id="installing-the-net-sdk">📦 Installing the .NET SDK</h2>
+<p>To use Godot 4, we recommend installing the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET 8 SDK</a>.</p>
+<p>:::tip
+You can install multiple versions of the .NET SDK. C# tooling is (generally) intelligent enough to pick the correct version based on the target framework of the project, the <code>global.json</code> file, and other settings in Godot. If you're running into issues with SDK resolution, feel free to reach out in <a href="https://discord.gg/MjA6HUzzAE">Discord</a>.</p>
+<p>It probably won't hurt to install the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/6.0">.NET 6 SDK</a> and/or <a href="https://dotnet.microsoft.com/en-us/download/dotnet/7.0">.NET 7 SDK</a>, too — having .NET 6, 7, and 8 will allow you to run a variety of C# projects and tools.
+:::</p>
+<p>:::info
+We often write file paths like <code>~/folder</code>. The <code>~</code> is a shortcut for your home folder. On Windows, <code>~</code> expands to something like <code>C:\Users\you</code>. On macOS, <code>~</code> expands to <code>/Users/you</code>. On Linux, <code>~</code> expands to <code>/home/you</code>. For example, <code>~/Documents</code> expands to <code>C:\Users\you\Documents</code> on Windows, <code>/Users/you/Documents</code> on macOS, and <code>/home/you/Documents</code> on Linux.
+:::</p>
+<p><Tabs groupId="os">
+  <TabItem value="macOS"></p>
+<p>Use the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">Microsoft provided
+installer</a> to
+install the .NET SDK on macOS. For more information about installing the .NET SDK on Mac, see <a href="https://learn.microsoft.com/en-us/dotnet/core/install/macos">Microsoft's article for
+Mac</a>.</p>
+<p></TabItem>
+  <TabItem value="Linux"></p>
+<p>There's a few gotchas to be aware of when installing the .NET SDK on
+Linux, so please see <a href="https://learn.microsoft.com/en-us/dotnet/core/install/linux">Microsoft's article for
+Linux</a>.</p>
+<p></TabItem>
+  <TabItem value="Windows"></p>
+<p>Open PowerShell as an administrator and use <code>winget</code> to install the .NET 8
+SDK: <code>winget install dotnet-sdk-8</code> (or <code>winget upgrade</code> to upgrade an existing installation). For more information about
+installing the .NET SDK on Windows, see <a href="https://learn.microsoft.com/en-us/dotnet/core/install/windows">Microsoft's article for
+Windows</a> or the <a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/install-windows.md">release notes</a>.</p>
+<p>You can also install the .NET SDK using the <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">Microsoft provided installer</a>, or through <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2022 Community Edition</a>.</p>
+<p></TabItem>
+</Tabs></p>
+<p>If you want to install the .NET SDK manually, you can find <a href="https://dotnet.microsoft.com/en-us/download/dotnet">all available downloads here</a>.</p>
+<p>The .NET SDK installers and package managers tend to place it in a standard location on each platform — if you install it manually, make sure you make a note of where you installed it to. We'll need that later.</p>
+<h2 id="version-control-with-git">⏳ Version Control with Git</h2>
+<p>You should <strong>absolutely</strong> be using a version control system to track your game's code and assets: specifically, <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git</a>.</p>
+<p>:::danger</p>
+<p>🔥🔥🔥 Mistakes get made, tools can accidentally clear out files, scene references can get broken — bad stuff happens during the chaos of development.</p>
+<p><strong>Git allows you to go back in time and undo unwanted changes</strong>, which is invaluable if you'd prefer development not be nightmare-inducing 😱. It also lets you collaborate with others easily and store your code in <a href="https://github.com">GitHub</a>, <a href="https://gitlab.com">GitLab</a>, and other such git-related services.</p>
+<p>While learning git can seem daunting, it is absolutely your responsibility as a game developer to protect your valuable time and work, and using git is a mandatory part of the experience that enables you to do just that. <strong>Game development is extremely hard, so don't make it harder on yourself by leaving your work unprotected</strong>. 🔥🔥🔥</p>
+<p>Be sure to bookmark the <a href="https://www.atlassian.com/git/tutorials/undoing-changes">Undoing Changes in Git</a> section to prevent panic during your next crisis. Messing up is not a matter of <strong>if</strong>, it's a matter of <strong>when</strong> — so be prepared.</p>
+<p>:::</p>
+<p>Properly learning and using git is a skill that gradually accrues over a lifetime of development, but <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">the basics aren't too hard</a>, and using <a href="https://code.visualstudio.com">Visual Studio Code</a> can allow you to do it without ever really having to touch a command-line, for the most part.</p>
+<p>:::info</p>
+<p>Even if you're already using git, but you're not entirely comfortable with it, take a look at the aforementioned <a href="https://www.atlassian.com/git/tutorials/what-is-version-control">git beginner guide</a> — this is the best guide, in my opinion, and the one I recommend to junior engineers all the time. You can jump straight into the <a href="https://www.atlassian.com/git/tutorials/advanced-overview">advanced tips</a> for anything you might be unsure about.</p>
+<p>:::</p>
+<h2 id="shell-environment">🖥 Shell Environment</h2>
+<p>Let's setup the shell environment to contain environment variables that point to the .NET SDK. This will allow you to run <code>dotnet</code> command line tool from anywhere. We will be using it to install GodotEnv to manage ours Godot installation, making Godot game development easier than ever.</p>
+<p>:::info</p>
+<h3 id="which-shell-should-i-use">👩‍💻 Which shell should I use?</h3>
+<p>For the sake of consistency, Chickensoft officially recommends using a bash shell on every OS, <em>especially</em> if you are developing your game to be cross-platform on macOS, Windows, and Linux — which is pretty easy to do with Godot, once your environments are setup correctly.</p>
+<p>Since a bash shell is not available on Windows by default, you can access one by installing <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git</a>, which includes the Git Bash for Windows application. You can also configure the Windows Terminal (there's an option to add a Windows Terminal profile in the git installer) and <a href="https://stackoverflow.com/a/70407051">VSCode to use bash</a> by default.</p>
+<p>Bash is a bit esoteric, but you can <a href="https://linuxconfig.org/bash-scripting-tutorial-for-beginners">easily learn the basics of bash that you'll need</a> pretty quickly. Or you can dive in and <a href="https://tldp.org/LDP/Bash-Beginners-Guide/html/index.html">read the whole book on bash</a>.</p>
+<p>:::</p>
+<p>Once we do this, we'll be able to run Godot from a terminal and create the proper launch configurations for Visual Studio Code.</p>
+<p><Tabs groupId="os">
+  <TabItem value="macOS"></p>
+<p>If <code>~/.zshrc</code> doesn't exist, you'll need to create it.</p>
+<p>:::tip
+To toggle visibility of hidden files in the macOS Finder, press <code>Cmd + Shift + .</code> — it also works in file dialogs!
+:::</p>
+<p>Add the following to your <code>~/.zshrc</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># .NET SDK Configuration</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/share/dotnet&quot;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_CLI_TELEMETRY_OPTOUT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="c1"># Disable analytics</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROLL_FORWARD_TO_PRERELEASE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Add the .NET SDK to the system paths so we can use the `dotnet` tool.</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">/sdk:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.dotnet/tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Run this if you ever run into errors while doing a `dotnet restore`</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">nugetclean</span><span class="o">=</span><span class="s2">&quot;dotnet nuget locals --clear all&quot;</span>
+</code></pre></div>
+<p></TabItem>
+  <TabItem value="Linux"></p>
+<p>If <code>~/.bashrc</code> doesn't exist, you'll need to create it. Add the following to the file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># .NET SDK Configuration</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROOT</span><span class="o">=</span><span class="s2">&quot;/usr/share/dotnet&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_CLI_TELEMETRY_OPTOUT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="c1"># Disable analytics</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROLL_FORWARD_TO_PRERELEASE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Add the .NET SDK to the system paths so we can use the `dotnet` tool.</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">/sdk:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.dotnet/tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># Run this if you ever run into errors while doing a `dotnet restore`</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">nugetclean</span><span class="o">=</span><span class="s2">&quot;dotnet nuget locals --clear all&quot;</span>
+</code></pre></div>
+<p></TabItem>
+  <TabItem value="Windows"></p>
+<p>In Windows, when using the bash shell that comes with Git (Git Bash), you can place your shell configuration in <code>~/.bashrc</code>. In the file, add the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .NET SDK Configuration</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROOT</span><span class="o">=</span><span class="s2">&quot;C:\\Program Files\\dotnet&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_CLI_TELEMETRY_OPTOUT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="c1"># Disable analytics</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DOTNET_ROLL_FORWARD_TO_PRERELEASE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Add the .NET SDK to the system paths so we can use the `dotnet` tool.</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$DOTNET_ROOT</span><span class="s2">\\sdk:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">\\.dotnet\\tools:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># Run this if you ever run into errors while doing a `dotnet restore`</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">nugetclean</span><span class="o">=</span><span class="s2">&quot;dotnet nuget locals --clear all&quot;</span>
+</code></pre></div>
+<p></TabItem>
+</Tabs></p>
+<p>:::info
+Depending on how you install the .NET SDK, you may or may not need to add them to your path in <code>~/.bashrc</code> (linux) or <code>~/.zshrc</code> (macOS). You can run <code>which dotnet</code> in a bash shell to see if they're already in your path. If they are, remove the <code>export PATH</code> lines for them added previously. If it is not the case, you should use <code>DOTNET_ROOT</code> to point to your <code>dotnet</code> root directory as showed above.</p>
+<p>Make sure the path to the .NET SDK matches where this tool was installed on your particular system, since it might be different if you installed it manually.
+:::</p>
+<h2 id="installing-godot">🤖 Installing Godot</h2>
+<p>You can use Chickensoft's command-line tool, <a href="https://github.com/chickensoft-games/GodotEnv">GodotEnv</a>, to manage Godot versions locally on your machine (as well as manage Godot asset library addons in your project).</p>
+<p><a href="https://github.com/chickensoft-games/GodotEnv">Chickensoft GodotEnv on GitHub</a></p>
+<p>:::info
+Using GodotEnv to install and manage Godot on your system provides a number of advantages:</p>
+<ul>
+<li>
+<p>✅ Automatically download, extract, and install any requested Godot 4.x+ version (with or without .NET support) from the Godot <a href="https://downloads.tuxfamily.org/godotengine/">TuxFamily</a> downloads mirror.</p>
+</li>
+<li>
+<p>✅ Automatically manage symlink on your system that point to the version of Godot you'd like to use. The symlink path never changes — just the version it points to.</p>
+</li>
+</ul>
+<p>On Windows, maintaining symlinks requires administrator privileges, making it a hassle to manage by hand. GodotEnv integrates with Windows' User Access Control (UAC) to automatically request admin privileges when needed.</p>
+<ul>
+<li>
+<p>✅ Adds a system <code>GODOT</code> environment variable that points to the symlink location, facilitating its usage through scripts.</p>
+</li>
+<li>
+<p>✅ Adds the <code>GODOT</code> pointed path to the system's PATH. Making initializing the Godot binary a breeze, just run <code>godot</code> to open the version managed by GodotEnv.</p>
+</li>
+<li>
+<p>✅ Standardizes installation locations across platforms and machines, making it easier to collaborate with other teammates.</p>
+</li>
+<li>
+<p>✅ Quickly change the system Godot version to any installed version, as well as listing all the installed versions.</p>
+</li>
+</ul>
+<p>:::</p>
+<p>To install GodotEnv, run the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dotnet<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span>--global<span class="w"> </span>Chickensoft.GodotEnv
+</code></pre></div>
+<h3 id="installing-with-godotenv">🦾 Installing with GodotEnv</h3>
+<p>You can install Godot automatically by specifying a Godot version the way it appears <a href="https://www.nuget.org/packages/GodotSharp/">here</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>godotenv<span class="w"> </span>godot<span class="w"> </span>install<span class="w"> </span><span class="m">4</span>.0.1
+</code></pre></div>
+<h3 id="installing-manually">😓 Installing Manually</h3>
+<p>If you're not convinced, you can always <a href="https://downloads.tuxfamily.org/godotengine/">download Godot</a> manually and install it wherever you'd like.</p>
+<h3 id="godot-installation-path">📍 Godot Installation Path</h3>
+<p>If you're using GodotEnv, Godot versions will automatically be installed in the following locations:</p>
+<p><Tabs groupId="os">
+  <TabItem value="macOS"></p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symlink</td>
+<td><code>/Users/{you}/.config/godotenv/godot/bin</code></td>
+</tr>
+<tr>
+<td>Actual Path</td>
+<td><code>/Users/{you}/.config/godotenv/godot/versions/godot_dotnet_{version}/Godot_mono.app/Contents/MacOS/Godot</code></td>
+</tr>
+</tbody>
+</table>
+<p></TabItem>
+  <TabItem value="Linux"></p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symlink</td>
+<td><code>/home/{you}/.config/godotenv/godot/bin</code></td>
+</tr>
+<tr>
+<td>Actual Path</td>
+<td><code>/home/{you}/.config/godotenv/godot/versions/godot_dotnet_{version}/Godot_v{version}-stable_mono_linux_x86_64/Godot_v{version}-stable_mono_linux.x86_64</code></td>
+</tr>
+</tbody>
+</table>
+<p></TabItem>
+  <TabItem value="Windows"></p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symlink</td>
+<td><code>C:\Users\{you}\AppData\Roaming\godotenv\godot\bin</code></td>
+</tr>
+<tr>
+<td>Actual Path</td>
+<td><code>C:\Users\{you}\AppData\Roaming\godotenv\godot\versions\godot_dotnet_{version}\Godot_v{version}-stable_mono_win64\Godot_v{version}-stable_mono_win64.exe</code></td>
+</tr>
+</tbody>
+</table>
+<p></TabItem>
+</Tabs></p>
+<p>:::caution
+All Chickensoft templates and <a href="https://code.visualstudio.com/Docs/editor/debugging#_launch-configurations">VSCode launch configurations</a> rely on an environment variable named <code>GODOT</code> that contains the path to the version of Godot you'd like to use.</p>
+<p><strong>GodotEnv will automatically update your environment variables</strong> by updating the <code>~/.zshrc</code> file on macOS or the <code>~/.bashrc</code> file on Linux to point to its symlink which in turn points to the active version of Godot. On Windows, GodotEnv will automatically attempt to update the environment variable with the relevant command prompt commands with requested admin privileges.</p>
+<p>❗️ <strong>You will have to logout and login again after environment variables have been updated for all applications to see the updated values.</strong></p>
+<p>If you're not using GodotEnv or want to double check that the variable exists, please make sure you've setup the environment variables as follows:
+<Tabs groupId="os">
+<TabItem value="macOS"></p>
+<p>In your <code>~/.zshrc</code> file, make sure something like the following exists.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># This should be added to your ~/.zshrc file by GodotEnv automatically, but</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># you can also add it manually and change the path of Godot to match</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># your system.</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GODOT</span><span class="o">=</span><span class="s2">&quot;/Users/{you}/.config/godotenv/godot/bin&quot;</span>
+</code></pre></div>
+<p></TabItem>
+  <TabItem value="Linux"></p>
+<p>In your <code>~/.bashrc</code> file, make sure something like the following exists.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># This should be added to your ~/.zshrc file by GodotEnv automatically, but</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># you can also add it manually and change the path of Godot to match</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># your system.</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GODOT</span><span class="o">=</span><span class="s2">&quot;/home/{you}/.config/godotenv/godot/bin&quot;</span>
+</code></pre></div>
+<p></TabItem>
+  <TabItem value="Windows"></p>
+<p>Windows has a visual editor for updating environment variables. See <a href="https://github.com/sindresorhus/guides/blob/main/set-environment-variables.md#windows-7-and-8">this article</a>.</p>
+<p></TabItem>
+</Tabs>
+:::</p>
+<p>If you're installing manually, consider placing it in one of the following locations:</p>
+<p><Tabs groupId="os">
+  <TabItem value="macOS"></p>
+<p>Move Godot to <code>/Applications/Godot_mono.app</code>. This is where all your other
+Mac apps are, anyways!</p>
+<p></TabItem>
+  <TabItem value="Linux"></p>
+<p>If you're using Linux, you probably have your own opinion on where to put
+it. If you're not sure, you can place the Godot executable (and its
+supporting files) in its own folder inside your user folder: <code>/home/Godot</code>.</p>
+<p></TabItem>
+  <TabItem value="Windows"></p>
+<p>On Windows, you can place Godot and any supporting files at <code>C:\Godot\Godot_mono.exe</code> or in its own
+folder in your user folder: <code>C:\Users\{you}\Godot</code>.</p>
+<p></TabItem>
+</Tabs></p>
+<h2 id="visual-studio-code">⌨️ Visual Studio Code</h2>
+<p>All of Chickensoft's packages and templates are designed to work well with Visual Studio Code (VSCode).</p>
+<p>You can download <a href="https://code.visualstudio.com">Visual Studio Code</a> here.</p>
+<h3 id="vscode-extensions">🔌 VSCode Extensions</h3>
+<p>At the very least, you'll need the <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp"><code>ms-dotnettools.csharp</code></a> extension. Chickensoft also <a href="https://github.com/chickensoft-games/GodotGame/blob/main/.vscode/extensions.json">recommends a handful of other extensions</a> that make development easier.</p>
+<h3 id="vscode-settings-for-godot-and-c">💾 VSCode Settings for Godot and C#</h3>
+<p>We need to turn OmniSharp back on — it should have never been turned off by default.</p>
+<p>Open your <a href="https://stackoverflow.com/a/65909052">VSCode Settings as a JSON file</a> and add the following settings:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="s2">&quot;dotnetAcquisitionExtension.enableTelemetry&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">// Increases project compatibility with the C# extension.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="s2">&quot;dotnet.preferCSharpExtension&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</code></pre></div>
+<p>Chickensoft also recommends the following additional settings for a pleasant C# development experience:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="s2">&quot;csharp.suppressHiddenDiagnostics&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">// Draw a line between selected brackets so you can see blocks of code easier.</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="s2">&quot;editor.guides.bracketPairs&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;active&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="s2">&quot;[csharp]&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="s2">&quot;editor.codeActionsOnSave&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="s2">&quot;source.addMissingImports&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;explicit&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="s2">&quot;source.fixAll&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;explicit&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="s2">&quot;source.organizeImports&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;explicit&quot;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="s2">&quot;editor.formatOnPaste&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="s2">&quot;editor.formatOnSave&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">  </span><span class="s2">&quot;editor.formatOnType&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">},</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1">// To make bash the default terminal on Windows, add these:</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="s2">&quot;terminal.integrated.defaultProfile.windows&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Git Bash&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="s2">&quot;terminal.integrated.profiles.windows&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="s2">&quot;Command Prompt&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">    </span><span class="s2">&quot;icon&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;terminal-cmd&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">      </span><span class="s2">&quot;${env:windir}\\Sysnative\\cmd.exe&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">      </span><span class="s2">&quot;${env:windir}\\System32\\cmd.exe&quot;</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">  </span><span class="s2">&quot;Git Bash&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="s2">&quot;icon&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;terminal&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">    </span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Git Bash&quot;</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">  </span><span class="s2">&quot;PowerShell&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">    </span><span class="s2">&quot;icon&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;terminal-powershell&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">    </span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;PowerShell&quot;</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="p">}</span>
+</code></pre></div>
+<p>Finally, C#'s semantic highlighting is a bit funky, so you can fix that by adding these color adjustments:</p>
+<details>
+<summary>C# Semantic Syntax Highlighting Color Correction Settings</summary>
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="s">&quot;editor.tokenColorCustomizations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="s">&quot;[*Dark*]&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="c1">// Themes that include the word &quot;Dark&quot; in them.</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="s">&quot;textMateRules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#608B4E&quot;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.attribute&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#C8C8C8&quot;</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.cdata&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#E9D585&quot;</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.delimiter&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#808080&quot;</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.name&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#569CD6&quot;</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a><span class="w">  </span><span class="s">&quot;[*Light*]&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">    </span><span class="c1">// Themes that include the word &quot;Light&quot; in them.</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="w">    </span><span class="s">&quot;textMateRules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-43" name="__codelineno-9-43" href="#__codelineno-9-43"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#008000&quot;</span>
+<a id="__codelineno-9-44" name="__codelineno-9-44" href="#__codelineno-9-44"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-45" name="__codelineno-9-45" href="#__codelineno-9-45"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-46" name="__codelineno-9-46" href="#__codelineno-9-46"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-47" name="__codelineno-9-47" href="#__codelineno-9-47"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.attribute&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-48" name="__codelineno-9-48" href="#__codelineno-9-48"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-49" name="__codelineno-9-49" href="#__codelineno-9-49"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#282828&quot;</span>
+<a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-52" name="__codelineno-9-52" href="#__codelineno-9-52"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-53" name="__codelineno-9-53" href="#__codelineno-9-53"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.cdata&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-54" name="__codelineno-9-54" href="#__codelineno-9-54"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-55" name="__codelineno-9-55" href="#__codelineno-9-55"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#808080&quot;</span>
+<a id="__codelineno-9-56" name="__codelineno-9-56" href="#__codelineno-9-56"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-57" name="__codelineno-9-57" href="#__codelineno-9-57"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-58" name="__codelineno-9-58" href="#__codelineno-9-58"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-59" name="__codelineno-9-59" href="#__codelineno-9-59"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.delimiter&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-60" name="__codelineno-9-60" href="#__codelineno-9-60"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-61" name="__codelineno-9-61" href="#__codelineno-9-61"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#808080&quot;</span>
+<a id="__codelineno-9-62" name="__codelineno-9-62" href="#__codelineno-9-62"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-63" name="__codelineno-9-63" href="#__codelineno-9-63"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-65" name="__codelineno-9-65" href="#__codelineno-9-65"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.name&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-66" name="__codelineno-9-66" href="#__codelineno-9-66"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-67" name="__codelineno-9-67" href="#__codelineno-9-67"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#808080&quot;</span>
+<a id="__codelineno-9-68" name="__codelineno-9-68" href="#__codelineno-9-68"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-69" name="__codelineno-9-69" href="#__codelineno-9-69"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-9-70" name="__codelineno-9-70" href="#__codelineno-9-70"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-9-71" name="__codelineno-9-71" href="#__codelineno-9-71"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-9-72" name="__codelineno-9-72" href="#__codelineno-9-72"></a><span class="w">  </span><span class="s">&quot;[*]&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-73" name="__codelineno-9-73" href="#__codelineno-9-73"></a><span class="w">    </span><span class="c1">// Themes that don&#39;t include the word &quot;Dark&quot; or &quot;Light&quot; in them.</span>
+<a id="__codelineno-9-74" name="__codelineno-9-74" href="#__codelineno-9-74"></a><span class="w">    </span><span class="c1">// These are some bold colors that show up well against most dark and</span>
+<a id="__codelineno-9-75" name="__codelineno-9-75" href="#__codelineno-9-75"></a><span class="w">    </span><span class="c1">// light themes.</span>
+<a id="__codelineno-9-76" name="__codelineno-9-76" href="#__codelineno-9-76"></a><span class="w">    </span><span class="c1">//</span>
+<a id="__codelineno-9-77" name="__codelineno-9-77" href="#__codelineno-9-77"></a><span class="w">    </span><span class="c1">// Change them to something that goes well with your preferred theme :)</span>
+<a id="__codelineno-9-78" name="__codelineno-9-78" href="#__codelineno-9-78"></a><span class="w">    </span><span class="s">&quot;textMateRules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-79" name="__codelineno-9-79" href="#__codelineno-9-79"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-80" name="__codelineno-9-80" href="#__codelineno-9-80"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-81" name="__codelineno-9-81" href="#__codelineno-9-81"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-82" name="__codelineno-9-82" href="#__codelineno-9-82"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#0091ff&quot;</span>
+<a id="__codelineno-9-83" name="__codelineno-9-83" href="#__codelineno-9-83"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-84" name="__codelineno-9-84" href="#__codelineno-9-84"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-85" name="__codelineno-9-85" href="#__codelineno-9-85"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-86" name="__codelineno-9-86" href="#__codelineno-9-86"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.attribute&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-87" name="__codelineno-9-87" href="#__codelineno-9-87"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-88" name="__codelineno-9-88" href="#__codelineno-9-88"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#8480ff&quot;</span>
+<a id="__codelineno-9-89" name="__codelineno-9-89" href="#__codelineno-9-89"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-90" name="__codelineno-9-90" href="#__codelineno-9-90"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-91" name="__codelineno-9-91" href="#__codelineno-9-91"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-92" name="__codelineno-9-92" href="#__codelineno-9-92"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.cdata&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-93" name="__codelineno-9-93" href="#__codelineno-9-93"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-94" name="__codelineno-9-94" href="#__codelineno-9-94"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#0091ff&quot;</span>
+<a id="__codelineno-9-95" name="__codelineno-9-95" href="#__codelineno-9-95"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-96" name="__codelineno-9-96" href="#__codelineno-9-96"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-97" name="__codelineno-9-97" href="#__codelineno-9-97"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-98" name="__codelineno-9-98" href="#__codelineno-9-98"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.delimiter&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-99" name="__codelineno-9-99" href="#__codelineno-9-99"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-100" name="__codelineno-9-100" href="#__codelineno-9-100"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#aa00ff&quot;</span>
+<a id="__codelineno-9-101" name="__codelineno-9-101" href="#__codelineno-9-101"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-102" name="__codelineno-9-102" href="#__codelineno-9-102"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-9-103" name="__codelineno-9-103" href="#__codelineno-9-103"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-9-104" name="__codelineno-9-104" href="#__codelineno-9-104"></a><span class="w">        </span><span class="s">&quot;scope&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;comment.documentation.name&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-105" name="__codelineno-9-105" href="#__codelineno-9-105"></a><span class="w">        </span><span class="s">&quot;settings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-106" name="__codelineno-9-106" href="#__codelineno-9-106"></a><span class="w">          </span><span class="s">&quot;foreground&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;#ef0074&quot;</span>
+<a id="__codelineno-9-107" name="__codelineno-9-107" href="#__codelineno-9-107"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-9-108" name="__codelineno-9-108" href="#__codelineno-9-108"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-9-109" name="__codelineno-9-109" href="#__codelineno-9-109"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-9-110" name="__codelineno-9-110" href="#__codelineno-9-110"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-9-111" name="__codelineno-9-111" href="#__codelineno-9-111"></a><span class="p">},</span>
+</code></pre></div>
+
+</details>
+
+<h2 id="creating-godot-projects">✨ Creating Godot Projects</h2>
+<p>Chickensoft provides a few <code>dotnet new</code> templates to help you quickly create a C# projects for use with Godot 4.</p>
+<p>Now that you've configured your environment (and hopefully rebooted since then), you should be able to use the <code>dotnet</code> tool from your terminal to be able to install Chickensoft's development templates.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>dotnet<span class="w"> </span>new<span class="w"> </span>install<span class="w"> </span>Chickensoft.GodotGame
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>dotnet<span class="w"> </span>new<span class="w"> </span>install<span class="w"> </span>Chickensoft.GodotPackage
+</code></pre></div>
+<h3 id="creating-a-godot-game">🎮 Creating a Godot Game</h3>
+<p>The GodotGame template allows you to quickly generate a game with debug launch configurations for VSCode, testing (locally and on CI/CD), code coverage, dependency update checks, and spell checking!</p>
+<p><a href="https://github.com/chickensoft-games/GodotGame">Chickensoft GodotGame on GitHub</a></p>
+<p>To create a new game, simply run the following commands and open the resulting directory in Godot and VSCode.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>dotnet<span class="w"> </span>new<span class="w"> </span>chickengame<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;MyGameName&quot;</span><span class="w"> </span>--param:author<span class="w"> </span><span class="s2">&quot;My Name&quot;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">cd</span><span class="w"> </span>MyGameName
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>dotnet<span class="w"> </span>restore
+</code></pre></div>
+<p>🥳 At last — you're finally ready to make a game!</p>
+<h3 id="creating-a-reusable-nuget-package">📦 Creating a Reusable Nuget Package</h3>
+<p>If you want to share compiled source code between projects or allow others to use your code in their projects, you can release a Nuget package.</p>
+<p>Using the GodotPackage template allows you to setup a package with continuous integration, auto-formatting, debugger profiles for VSCode, and a pre-configured unit test project.</p>
+<p><a href="https://github.com/chickensoft-games/GodotPackage">Chickensoft GodotPackage on GitHub</a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>dotnet<span class="w"> </span>new<span class="w"> </span>--install<span class="w"> </span>Chickensoft.GodotPackage
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>dotnet<span class="w"> </span>new<span class="w"> </span>chickenpackage<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;MyPackageName&quot;</span><span class="w"> </span>--param:author<span class="w"> </span><span class="s2">&quot;My Name&quot;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">cd</span><span class="w"> </span>MyPackageName
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>/path/to/godot4<span class="w"> </span>--headless<span class="w"> </span>--build-solutions<span class="w"> </span>--quit
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>dotnet<span class="w"> </span>build
+</code></pre></div>
+<p>Open the new project in VSCode and use the provided launch configurations to debug your application.</p>
+<p>:::tip
+If you need to share code <strong>and</strong> other resource files like scenes, textures, music, and anything else that isn't a C# source file, you should use a Godot Asset Library package instead. Chickensoft's <a href="https://github.com/chickensoft-games/GodotEnv">GodotEnv</a> CLI tool allows you to easily install and manage addons in your project.</p>
+<p><a href="https://github.com/chickensoft-games/GodotEnv">Chickensoft GodotEnv on GitHub</a>
+:::</p>
+<h2 id="setting-up-dev-containers">Setting Up Dev Containers</h2>
+<p>Chickensoft's development tools provide scripts that make it easier to setup and use Godot with C# in a dev container.</p>
+<p><a href="https://github.com/chickensoft-games/GodotEnv">Chickensoft GodotEnv on GitHub</a></p>
+<h2 id="using-chickensofts-templates">Using Chickensoft's Templates</h2>
+<p>These templates show how to setup a Godot C# project.</p>
+<p><a href="https://github.com/chickensoft-games/GodotGame">Chickensoft GodotGame on GitHub</a></p>
+<h2 id="creating-a-c-package-for-godot">Creating a C# Package for Godot</h2>
+<p>We also have a project template for creating packages that can be imported by Godot projects.</p>
+<p><a href="https://github.com/chickensoft-games/GodotPackage">Chickensoft GodotPackage on GitHub</a></p>
+<h2 id="using-a-container-registry">Using a Container Registry</h2>
+<p>When building and testing your project using GitHub Actions, it can be helpful to use a container registry if your project has external dependencies.</p>
+<p><a href="https://github.com/chickensoft-games/GodotEnv">Chickensoft GodotEnv on GitHub</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.copy"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>

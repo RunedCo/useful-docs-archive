@@ -1,0 +1,2229 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Build complex state preservation systems for implementing game save systems or custom netcode with Chickensoft's new serialization tools.
+">
+      
+      
+        <meta name="author" content="Contributors">
+      
+      
+        <link rel="canonical" href="https://username.github.io/repository/chickensoft/blog/posts/2024-06-11-serialization-for-csharp-games/">
+      
+      
+        <link rel="prev" href="../2024-01-01-godot-csharp-2024/">
+      
+      
+        <link rel="next" href="../2025-02-18-display-scaling/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>Serialization for C# Games - Coding Knowledge Archive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-serialization-trap" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Coding Knowledge Archive" class="md-header__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Coding Knowledge Archive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Serialization for C# Games
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  Chickensoft
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../license/" class="md-tabs__link">
+        
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Coding Knowledge Archive" class="md-nav__button md-logo" aria-label="Coding Knowledge Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Coding Knowledge Archive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chickensoft
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Chickensoft
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../philosophy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Philosophy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../introspection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introspection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    How C# Works in Godot
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            How C# Works in Godot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how_csharp_works_in_godot/how_csharp_works_in_godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    #️⃣ How C# Works in Godot
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Logic Blocks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Logic Blocks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧠 LogicBlocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/01_why/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🤨 Why Logic Blocks?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/02_installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📦 Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/03_quick_start/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🚀 Quick Start
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/07_serialization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💾 Serialization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/08_tips_and_tricks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪄 Tips and Tricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_7" id="__nav_2_6_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    04 basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            04 basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧮 Basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/01_inputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📥 Inputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/02_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/03_outputs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    📤 Outputs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/04_errors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ❌ Errors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/04_basics/05_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_8" id="__nav_2_6_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    05 tutorial
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            05 tutorial
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏲️ Timer Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/01_timer_logic_block/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧊 Timer Logic Block
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/02_power/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔆 Power
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/03_coundown/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏳ Countdown
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/05_tutorial/04_beeping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ⏰ Beeping
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9" id="__nav_2_6_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    06 testing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            06 testing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🧪 Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/01_testing_logic_blocks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    💡 Testing Logic Blocks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/02_testing_states/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🔄 Testing States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logic_blocks/06_testing/03_testing_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    🪢 Testing Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_7_1" id="__nav_2_7_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Posts
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Posts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-07-03-indie-game-godot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    It's time to make that indie C# game in Godot.
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-11-27-godot-unity-alternative/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Godot and C#: A Viable Unity Alternative
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-04-26-gdscript-vs-csharp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDScript vs C# Performance Comparison
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-09-14-can-godot-deliver/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Can Godot Deliver on Its Promise?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-12-01-game-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Game Architecture for Fun and Profit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024-01-01-godot-csharp-2024/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using Godot with C# in 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Serialization for C# Games
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Serialization for C# Games
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-serialization-trap" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪤 The Serialization Trap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialization-for-everyone" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧑‍⚕️ Serialization for Everyone
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-makes-a-good-save-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 What Makes a Good Save System?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-make-a-serializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙋‍♀️ Why Make a Serializer?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🙋‍♀️ Why Make a Serializer?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-metadata-at-build-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Generating Metadata at Build Time
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-the-introspection-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Introducing the Introspection Generator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-the-serialization-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Introducing the Serialization System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#godot-specific-serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Godot-Specific Serialization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-savefilebuilder" class="md-nav__link">
+    <span class="md-ellipsis">
+      👽 Introducing SaveFileBuilder
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serializing-hierarchical-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Serializing Hierarchical State Machines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-better-autoinject" class="md-nav__link">
+    <span class="md-ellipsis">
+      💉 A Better AutoInject
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-loading-in-the-game-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕹️ Saving &amp; Loading in the Game Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2025-02-18-display-scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Solving Game Display Scaling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-serialization-trap" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪤 The Serialization Trap
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialization-for-everyone" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧑‍⚕️ Serialization for Everyone
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-makes-a-good-save-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      💾 What Makes a Good Save System?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-make-a-serializer" class="md-nav__link">
+    <span class="md-ellipsis">
+      🙋‍♀️ Why Make a Serializer?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🙋‍♀️ Why Make a Serializer?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-metadata-at-build-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Generating Metadata at Build Time
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-the-introspection-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔮 Introducing the Introspection Generator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-the-serialization-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 Introducing the Serialization System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#godot-specific-serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤖 Godot-Specific Serialization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introducing-savefilebuilder" class="md-nav__link">
+    <span class="md-ellipsis">
+      👽 Introducing SaveFileBuilder
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serializing-hierarchical-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      💡 Serializing Hierarchical State Machines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-better-autoinject" class="md-nav__link">
+    <span class="md-ellipsis">
+      💉 A Better AutoInject
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-loading-in-the-game-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕹️ Saving &amp; Loading in the Game Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Serialization for C# Games</h1>
+
+<p><img alt="Article header image. Balloons with icons inside representing the new packages and updates." src="header.jpg" /></p>
+<p>Serialization is incredibly important to games, and often painfully difficult to implement well. Unless you just like building serializers, you may find yourself putting off developing a save/load system, especially if you need more than just a simple "what level am I on?" mechanism.</p>
+<!-- truncate -->
+
+<h2 id="the-serialization-trap">🪤 The Serialization Trap</h2>
+<p>Like compilers, game engines, video games, and operating systems, serialization is a bit of a siren's call for programming enthusiasts. It seems easy at first: just write some data to a file — done!</p>
+<p>But...what do you do with the data once you read it back from the file? What if the save file is outdated and your models have changed? How do you reconstruct a hierarchical state machine? What about translating saved data into polymorphic models that describe your game? And if you manage to solve that, how do you pass them through the scene tree to rehydrate your game's save state?</p>
+<h2 id="serialization-for-everyone">🧑‍⚕️ Serialization for Everyone</h2>
+<p>For the last 6 months, I've been exploring answers to the questions above. I am releasing 3 major updates to existing packages, as well as 4 completely new packages that I'm really excited to share with you.</p>
+<p><img alt="Balloons with package icons and the text 'Summer 2024 Update: Serialization for C# Games'" src="summer_2024.jpg" /></p>
+<p>There's a better way to make games now — with a fully open source stack. If this sounds interesting to you, strap in — it's going to be a long ride.</p>
+<h2 id="what-makes-a-good-save-system">💾 What Makes a Good Save System?</h2>
+<p>A good save system, in my opinion, should meet the following criteria:</p>
+<ul>
+<li>🔮 Works when compiled ahead-of-time. A general purpose serialization toolchain needs to work on the lowest common denominator of platforms — iOS.</li>
+</ul>
+<p>AOT is a steep requirement for serialization, as it essentially condemns you to generating metadata about types at build time.</p>
+<ul>
+<li>
+<p>🔘 Opt-in by default. Sometimes you want to extend a non-serializable class that you don't control and make it serializable.</p>
+</li>
+<li>
+<p>⤵️ Polymorphic deserialization. It needs to be easy to deserialize explicit implementations of an abstract type.</p>
+</li>
+<li>
+<p>🔄 Collections. Even if you don't intend to support generic types, properly implementing collections is non-trivial.</p>
+</li>
+<li>
+<p>📦 Versioning. Models change as a game evolves, and you don't want to break existing save files.</p>
+</li>
+<li>
+<p>🪝 Serialization Hooks — for types with custom serialization logic or types outside the assembly whose metadata can't be generated.</p>
+</li>
+</ul>
+<p>Now that we know what a good serialization system looks like, let's talk about how its done.</p>
+<h2 id="why-make-a-serializer">🙋‍♀️ Why Make a Serializer? <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></h2>
+<p>The .NET ecosystem has slowly begun to embrace an AOT-friendly world, and System.Text.Json can now generate metadata about types at build time.</p>
+<p>The new serialization system we've introduced is built on top of System.Text.Json. Because of this shared foundation, it can interop seamlessly with existing generated JSON contexts and converters.</p>
+<p>Why build a new serializer on top of System.Text.Json if it can already do AOT serialization just fine? Unfortunately, System.Text.Json has a few pain points:</p>
+<ul>
+<li>
+<p>Doesn't help with versioning.</p>
+</li>
+<li>
+<p>Derived types are painful — you have to manually register them on the base type.</p>
+</li>
+</ul>
+<p>Essentially, you have to keep a registry of all derived types in a place unrelated to the type itself. Manually tracking types is incredibly error-prone and hostile to refactoring type hierarchies — a common activity if you're using hierarchial state machines.</p>
+<ul>
+<li>Doesn't support serialization hooks. You have to make a custom converter for every type that needs custom serialization logic.</li>
+</ul>
+<p>Since we are designing for a specific use case — saving and loading game files — we can make a solution that's tailored to exactly that. Plus, we can still leverage the amazing foundation that System.Text.Json provides.</p>
+<h3 id="generating-metadata-at-build-time">🔮 Generating Metadata at Build Time</h3>
+<p>If we're going to make an AOT-friendly serialization system, we're going to need metadata about types. We've already established that the metadata generated by System.Text.Json requires us to write rather unfriendly code that is going to be a pain to refactor, so we can't rely on the System.Text.Json source generator.</p>
+<p>We're going to have to make our own.</p>
+<h2 id="introducing-the-introspection-generator">🔮 Introducing the Introspection Generator</h2>
+<p>The new <a href="https://github.com/chickensoft-games/Introspection">Introspection</a> generator is now the backbone of all the major Chickensoft libraries that need metaprogramming capabilities. It automatically generates a registry of every type that is visible from the global scope, including nested types.</p>
+<p><a href="https://github.com/chickensoft-games/Introspection">Chickensoft.Introspection on GitHub</a></p>
+<details>
+
+<summary><code>TypeRegistry.g.cs</code> Example</summary>
+
+An abbreviated version of the entries in a generated type registry. Not particularly interesting unless you just like writing serializers.
+
+:::info
+The generic form of `Activator.CreateInstance<T>` works well (and is performant) in both AOT and JIT scenarios. I verified this by emailing Michal Strehovský, the .NET compiler engineer [who overhauled it](https://x.com/MStrehovsky/status/1231673490551582721).
+:::
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">[typeof(PartialModel)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IdentifiableTypeMetadata</span><span class="p">(</span><span class="s">&quot;PartialModel&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">PartialModel</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="o">&lt;</span><span class="n">PartialModel</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PartialModel</span><span class="p">.</span><span class="n">MetatypeMetadata</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;multiple_partial_definitions&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">[typeof(PropertyModel)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AbstractIntrospectiveTypeMetadata</span><span class="p">(</span><span class="s">&quot;PropertyModel&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">PropertyModel</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PropertyModel</span><span class="p">.</span><span class="n">MetatypeMetadata</span><span class="p">()),</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">[typeof(SomeType)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IntrospectiveTypeMetadata</span><span class="p">(</span><span class="s">&quot;SomeType&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">SomeType</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="o">&lt;</span><span class="n">SomeType</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SomeType</span><span class="p">.</span><span class="n">MetatypeMetadata</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">[typeof(StaticPropertyIsSkipped)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IntrospectiveTypeMetadata</span><span class="p">(</span><span class="s">&quot;StaticPropertyIsSkipped&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">StaticPropertyIsSkipped</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="o">&lt;</span><span class="n">StaticPropertyIsSkipped</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StaticPropertyIsSkipped</span><span class="p">.</span><span class="n">MetatypeMetadata</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">[typeof(TraditionalNamespace.A)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteTypeMetadata</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">TraditionalNamespace</span><span class="p">.</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="o">&lt;</span><span class="n">TraditionalNamespace</span><span class="p">.</span><span class="n">A</span><span class="o">&gt;</span><span class="p">()),</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">[typeof(TraditionalNamespace.A.AA)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConcreteTypeMetadata</span><span class="p">(</span><span class="s">&quot;AA&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="n">TraditionalNamespace</span><span class="p">.</span><span class="n">A</span><span class="p">.</span><span class="n">AA</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="o">&lt;</span><span class="n">TraditionalNamespace</span><span class="p">.</span><span class="n">A</span><span class="p">.</span><span class="n">AA</span><span class="o">&gt;</span><span class="p">()),</span>
+</code></pre></div>
+
+</details>
+
+<p>Better yet, the new Introspection generator is designed for performance: it generates all of its data without using any analyzer symbol data — just the syntax tree — making it pretty dang fast. It also deprecates our previous generator, <a href="https://github.com/chickensoft-games/SuperNodes">SuperNodes</a>, that was not as capable or performant.</p>
+<p>You can read all about it on the <a href="https://github.com/chickensoft-games/Introspection">Introspection</a> repository. The general idea is that it allows you to tag types that are introspective with the <code>[Meta]</code> attribute. Introspective types have additional metadata generated about them, including their attribute information, their properties, and the attributes on their properties, among other things.</p>
+<details>
+
+<summary><code>IntrospectiveType.g.cs</code> Example</summary>
+
+An abbreviated version of the generated metadata for an introspective type.
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">  </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">MixinBlackboard</span><span class="w"> </span><span class="n">MixinState</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">IMetatype</span><span class="w"> </span><span class="n">Metatype</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IIntrospectiveTypeMetadata</span><span class="p">)</span><span class="n">Types</span><span class="p">.</span><span class="n">Graph</span><span class="p">.</span><span class="n">GetMetadata</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">IntrospectiveType</span><span class="p">))).</span><span class="n">Metatype</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MetatypeMetadata</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">IMetatype</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="n">IntrospectiveType</span><span class="p">);</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">HasInitProperties</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IReadOnlyList</span><span class="o">&lt;</span><span class="n">PropertyMetadata</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Properties</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">PropertyMetadata</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="k">new</span><span class="w"> </span><span class="nf">PropertyMetadata</span><span class="p">(</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Address&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="n">IsInit</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">        </span><span class="n">IsRequired</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">        </span><span class="n">Getter</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IntrospectiveType</span><span class="p">)</span><span class="n">obj</span><span class="p">).</span><span class="n">Address</span><span class="p">,</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">        </span><span class="n">Setter</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">,</span><span class="w"> </span><span class="kt">object?</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IntrospectiveType</span><span class="p">)</span><span class="n">obj</span><span class="p">).</span><span class="n">Address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="k">value</span><span class="p">,</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="n">GenericType</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GenericType</span><span class="p">(</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">          </span><span class="n">OpenType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">          </span><span class="n">ClosedType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">          </span><span class="n">Arguments</span><span class="p">:</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="o">&lt;</span><span class="n">GenericType</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">          </span><span class="n">GenericTypeGetter</span><span class="p">:</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">receiver</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">          </span><span class="n">GenericTypeGetter2</span><span class="p">:</span><span class="w"> </span><span class="k">default</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">        </span><span class="p">),</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">        </span><span class="n">Attributes</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">          </span><span class="na">[typeof(TagAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">TagAttribute</span><span class="p">(</span><span class="s">&quot;address&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">          </span><span class="p">}</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">      </span><span class="p">),</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">      </span><span class="k">new</span><span class="w"> </span><span class="nf">PropertyMetadata</span><span class="p">(</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">        </span><span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Age&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">        </span><span class="n">IsInit</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">        </span><span class="n">IsRequired</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">        </span><span class="n">Getter</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IntrospectiveType</span><span class="p">)</span><span class="n">obj</span><span class="p">).</span><span class="n">Age</span><span class="p">,</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">        </span><span class="n">Setter</span><span class="p">:</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">        </span><span class="n">GenericType</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GenericType</span><span class="p">(</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">          </span><span class="n">OpenType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">          </span><span class="n">ClosedType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">int</span><span class="p">),</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">          </span><span class="n">Arguments</span><span class="p">:</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="o">&lt;</span><span class="n">GenericType</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">          </span><span class="n">GenericTypeGetter</span><span class="p">:</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">receiver</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">          </span><span class="n">GenericTypeGetter2</span><span class="p">:</span><span class="w"> </span><span class="k">default</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w">        </span><span class="p">),</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w">        </span><span class="n">Attributes</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w">          </span><span class="na">[typeof(TagAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">TagAttribute</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="w">          </span><span class="p">}</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="w">      </span><span class="p">),</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="w">      </span><span class="k">new</span><span class="w"> </span><span class="nf">PropertyMetadata</span><span class="p">(</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="w">        </span><span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Description&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="w">        </span><span class="n">IsInit</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="w">        </span><span class="n">IsRequired</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">,</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="w">        </span><span class="n">Getter</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IntrospectiveType</span><span class="p">)</span><span class="n">obj</span><span class="p">).</span><span class="n">Description</span><span class="p">,</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="w">        </span><span class="n">Setter</span><span class="p">:</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a><span class="w">        </span><span class="n">GenericType</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GenericType</span><span class="p">(</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a><span class="w">          </span><span class="n">OpenType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a><span class="w">          </span><span class="n">ClosedType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="w">          </span><span class="n">Arguments</span><span class="p">:</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="o">&lt;</span><span class="n">GenericType</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="w">          </span><span class="n">GenericTypeGetter</span><span class="p">:</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">receiver</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="w">          </span><span class="n">GenericTypeGetter2</span><span class="p">:</span><span class="w"> </span><span class="k">default</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="w">        </span><span class="p">),</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w">        </span><span class="n">Attributes</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="w">          </span><span class="na">[typeof(TagAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">TagAttribute</span><span class="p">(</span><span class="s">&quot;description&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a><span class="w">          </span><span class="p">}</span>
+<a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a><span class="w">      </span><span class="p">),</span>
+<a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a><span class="w">      </span><span class="k">new</span><span class="w"> </span><span class="nf">PropertyMetadata</span><span class="p">(</span>
+<a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a><span class="w">        </span><span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Name&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a><span class="w">        </span><span class="n">IsInit</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a><span class="w">        </span><span class="n">IsRequired</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a><span class="w">        </span><span class="n">Getter</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">((</span><span class="n">IntrospectiveType</span><span class="p">)</span><span class="n">obj</span><span class="p">).</span><span class="n">Name</span><span class="p">,</span>
+<a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a><span class="w">        </span><span class="n">Setter</span><span class="p">:</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a><span class="w">        </span><span class="n">GenericType</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GenericType</span><span class="p">(</span>
+<a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a><span class="w">          </span><span class="n">OpenType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a><span class="w">          </span><span class="n">ClosedType</span><span class="p">:</span><span class="w"> </span><span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span>
+<a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a><span class="w">          </span><span class="n">Arguments</span><span class="p">:</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Array</span><span class="p">.</span><span class="n">Empty</span><span class="o">&lt;</span><span class="n">GenericType</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a><span class="w">          </span><span class="n">GenericTypeGetter</span><span class="p">:</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">receiver</span><span class="p">.</span><span class="n">Receive</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a><span class="w">          </span><span class="n">GenericTypeGetter2</span><span class="p">:</span><span class="w"> </span><span class="k">default</span>
+<a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a><span class="w">        </span><span class="p">),</span>
+<a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a><span class="w">        </span><span class="n">Attributes</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a><span class="w">          </span><span class="na">[typeof(TagAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a><span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">TagAttribute</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a><span class="w">          </span><span class="p">}</span>
+<a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a><span class="w">      </span><span class="p">)</span>
+<a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>
+<a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-94" name="__codelineno-1-94" href="#__codelineno-1-94"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IReadOnlyDictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Attributes</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-95" name="__codelineno-1-95" href="#__codelineno-1-95"></a><span class="w">      </span><span class="na">[typeof(IdAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-96" name="__codelineno-1-96" href="#__codelineno-1-96"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="nf">IdAttribute</span><span class="p">(</span><span class="s">&quot;init_args_model&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-97" name="__codelineno-1-97" href="#__codelineno-1-97"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-1-98" name="__codelineno-1-98" href="#__codelineno-1-98"></a><span class="w">      </span><span class="na">[typeof(MetaAttribute)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Attribute</span><span class="p">[]</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-99" name="__codelineno-1-99" href="#__codelineno-1-99"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="nf">MetaAttribute</span><span class="p">()</span>
+<a id="__codelineno-1-100" name="__codelineno-1-100" href="#__codelineno-1-100"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-1-101" name="__codelineno-1-101" href="#__codelineno-1-101"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-1-102" name="__codelineno-1-102" href="#__codelineno-1-102"></a>
+<a id="__codelineno-1-103" name="__codelineno-1-103" href="#__codelineno-1-103"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-104" name="__codelineno-1-104" href="#__codelineno-1-104"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IReadOnlyList</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Mixins</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-105" name="__codelineno-1-105" href="#__codelineno-1-105"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-1-106" name="__codelineno-1-106" href="#__codelineno-1-106"></a>
+<a id="__codelineno-1-107" name="__codelineno-1-107" href="#__codelineno-1-107"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-108" name="__codelineno-1-108" href="#__codelineno-1-108"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="n">IReadOnlyDictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">object</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">MixinHandlers</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dictionary</span><span class="o">&lt;</span><span class="n">System</span><span class="p">.</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Action</span><span class="o">&lt;</span><span class="kt">object</span><span class="o">&gt;&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-109" name="__codelineno-1-109" href="#__codelineno-1-109"></a><span class="w">    </span><span class="p">};</span>
+<a id="__codelineno-1-110" name="__codelineno-1-110" href="#__codelineno-1-110"></a>
+<a id="__codelineno-1-111" name="__codelineno-1-111" href="#__codelineno-1-111"></a>
+<a id="__codelineno-1-112" name="__codelineno-1-112" href="#__codelineno-1-112"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-113" name="__codelineno-1-113" href="#__codelineno-1-113"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Construct</span><span class="p">(</span><span class="n">IReadOnlyDictionary</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">object?</span><span class="o">&gt;?</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-114" name="__codelineno-1-114" href="#__codelineno-1-114"></a><span class="w">      </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">ArgumentNullException</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Constructing IntrospectiveType requires init args.&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-115" name="__codelineno-1-115" href="#__codelineno-1-115"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nf">IntrospectiveType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-116" name="__codelineno-1-116" href="#__codelineno-1-116"></a><span class="w">        </span><span class="n">Address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">ContainsKey</span><span class="p">(</span><span class="s">&quot;Address&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;Address&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">default</span><span class="o">!</span><span class="p">,</span>
+<a id="__codelineno-1-117" name="__codelineno-1-117" href="#__codelineno-1-117"></a><span class="w">        </span><span class="n">Age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">ContainsKey</span><span class="p">(</span><span class="s">&quot;Age&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;Age&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">default</span><span class="o">!</span><span class="p">,</span>
+<a id="__codelineno-1-118" name="__codelineno-1-118" href="#__codelineno-1-118"></a><span class="w">        </span><span class="n">Description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">ContainsKey</span><span class="p">(</span><span class="s">&quot;Description&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;Description&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">default</span><span class="o">!</span><span class="p">,</span>
+<a id="__codelineno-1-119" name="__codelineno-1-119" href="#__codelineno-1-119"></a><span class="w">        </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">ContainsKey</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">args</span><span class="p">[</span><span class="s">&quot;Name&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="k">default</span><span class="o">!</span>
+<a id="__codelineno-1-120" name="__codelineno-1-120" href="#__codelineno-1-120"></a><span class="w">      </span><span class="p">};</span>
+<a id="__codelineno-1-121" name="__codelineno-1-121" href="#__codelineno-1-121"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-122" name="__codelineno-1-122" href="#__codelineno-1-122"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-123" name="__codelineno-1-123" href="#__codelineno-1-123"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Equals</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">obj</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<a id="__codelineno-1-124" name="__codelineno-1-124" href="#__codelineno-1-124"></a><span class="w">    </span><span class="na">[ExcludeFromCodeCoverage]</span>
+<a id="__codelineno-1-125" name="__codelineno-1-125" href="#__codelineno-1-125"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">GetHashCode</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">base</span><span class="p">.</span><span class="n">GetHashCode</span><span class="p">();</span>
+<a id="__codelineno-1-126" name="__codelineno-1-126" href="#__codelineno-1-126"></a><span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+
+</details>
+
+<p>You don't have to fully understand the generated introspection data to appreciate it. Basically, it makes all the stuff you'd ever need to write a decently polymorphic serialization system.</p>
+<p>✅ Now any serializer we build on top of this will work when compiled ahead of time — done! Not so bad, right?</p>
+<h2 id="introducing-the-serialization-system">📦 Introducing the Serialization System</h2>
+<p>The new <a href="https://github.com/chickensoft-games/Serialization">Serialization</a> system builds off the Introspection generator, allowing you to define serializable types with relative ease.</p>
+<p><a href="https://github.com/chickensoft-games/Serialization">Chickensoft.Serialization on GitHub</a></p>
+<p>It isn't as powerful as the System.Text.Json generators, but it's tailored for writing simple, refactor-friendly code.</p>
+<p>Here's what a serializable game model looks like.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">Chickensoft.Introspection</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">Chickensoft.Serialization</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">Godot</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">[Meta, Id(&quot;player_data&quot;)]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">PlayerData</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="na">[Save(&quot;global_transform&quot;)]</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">Transform3D</span><span class="w"> </span><span class="n">GlobalTransform</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="na">[Save(&quot;state_machine&quot;)]</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">PlayerLogic</span><span class="w"> </span><span class="n">StateMachine</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="na">[Save(&quot;velocity&quot;)]</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">Vector3</span><span class="w"> </span><span class="n">Velocity</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</code></pre></div>
+<p>:::tip
+The <code>[Id]</code> attribute tells the Introspection generator to generate additional metadata on top of the additional introspection data specific to "identifiable" types. The Serialization system and Introspection generator were designed in tandem, so they work together seamlessly, even though the Introspection generator has no knowledge of serialization. It just generates metadata.
+:::</p>
+<p>✅ Note how the serialization system is opt-in: just add the <code>[Save]</code> attribute and specify a json key name for the properties you wish to persist!</p>
+<p>✅ It also works with collections. It provides support for the only 3 collections you should ever need when working with JSON: <code>HashSet&lt;T&gt;</code>, <code>List&lt;T&gt;</code>, <code>Dictionary&lt;TKey, TValue&gt;</code>. If you need something else, you're doing it wrong. (Or you can just use the System.Text.Json generator and make a serialization context, if you must get fancy).</p>
+<p>✅ Oh, and it works with inheritance and abstract types, too. Check the <a href="https://github.com/chickensoft-games/Serialization">Serialization</a> readme for more usage details.</p>
+<p>✅ Oh, and of course — versioning! Here's what a versioned model looks like.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="na">[Meta, Id(&quot;log_entry&quot;)]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LogEntry</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">SystemLogEntry</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="na">[Meta, Version(1)]</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LogEntry1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">LogEntry</span><span class="p">,</span><span class="w"> </span><span class="n">IOutdated</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="na">[Save(&quot;text&quot;)]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="na">[Save(&quot;type&quot;)]</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">Upgrade</span><span class="p">(</span><span class="n">IReadOnlyBlackboard</span><span class="w"> </span><span class="n">deps</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LogEntry2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Text</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="n">Type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="k">switch</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">      </span><span class="s">&quot;info&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">LogType</span><span class="p">.</span><span class="n">Info</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">      </span><span class="s">&quot;warning&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">LogType</span><span class="p">.</span><span class="n">Warning</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="s">&quot;error&quot;</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">LogType</span><span class="p">.</span><span class="n">Error</span><span class="p">,</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="p">}</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="k">public</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">LogType</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">  </span><span class="n">Info</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">  </span><span class="n">Warning</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">  </span><span class="n">Error</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="p">}</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="na">[Meta, Version(2)]</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">LogEntry2</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">LogEntry</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">  </span><span class="na">[Save(&quot;text&quot;)]</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">  </span><span class="na">[Save(&quot;type&quot;)]</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">LogType</span><span class="w"> </span><span class="n">Type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">init</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="p">}</span>
+</code></pre></div>
+<p>The serialization system can even upgrade your out of date models while they're being deserialized, ensuring you never see an out-of-date type in your game logic.</p>
+<p>✅ Finally, you can also implement custom serialization hooks on types that wish to customize how they are serialized. They have access to their JSON node, and can even return an entirely different object if they wish (as long as it is a derived type of the type being deserialized).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">  </span><span class="na">[Meta, Id(&quot;custom_serializable&quot;)]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">CustomSerializable</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ICustomSerializable</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">Value</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">get</span><span class="p">;</span><span class="w"> </span><span class="k">set</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">object</span><span class="w"> </span><span class="nf">OnDeserialized</span><span class="p">(</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="n">IdentifiableTypeMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="n">JsonObject</span><span class="w"> </span><span class="n">json</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="n">JsonSerializerOptions</span><span class="w"> </span><span class="n">options</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">]</span><span class="o">?.</span><span class="n">GetValue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnSerialized</span><span class="p">(</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">      </span><span class="n">IdentifiableTypeMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">      </span><span class="n">JsonObject</span><span class="w"> </span><span class="n">json</span><span class="p">,</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">      </span><span class="n">JsonSerializerOptions</span><span class="w"> </span><span class="n">options</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">      </span><span class="c1">// Even though our property doesn&#39;t have the [Save] attribute, we</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">      </span><span class="c1">// can save it manually.</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">      </span><span class="n">json</span><span class="p">[</span><span class="s">&quot;value&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Value</span><span class="p">;</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p>🥳 Now we've met all of our serialization requirements.</p>
+<p>✨ But wait, there's more! A LOT more.</p>
+<h2 id="godot-specific-serialization">🤖 Godot-Specific Serialization</h2>
+<p>We also need to be able to serialize Godot-specific types, like transforms, vectors, etc. Fortunately, there's a new package containing a few System.Text.Json converters that can convert Godot types to JSON and back.</p>
+<p><a href="https://github.com/chickensoft-games/Serialization.Godot">Chickensoft.Serialization.Godot on GitHub</a></p>
+<p>It only supports a handful of types right now, so please — PLEASE — contribute to it if you can!</p>
+<h2 id="introducing-savefilebuilder">👽 Introducing SaveFileBuilder</h2>
+<p>Now that we can define beautiful, serializable models, how do we extract data from disparate nodes across the scene tree, and how do we return it to the relevant nodes (or create them) when we load the game?</p>
+<p><a href="https://github.com/chickensoft-games/SaveFileBuilder">Chickensoft SaveFileBuilder on GitHub</a></p>
+<p>Meet SaveFileBuilder. It allows you to define a <code>SaveFile</code> as a tree of <code>SaveChunks</code>. Each <code>SaveChunk</code> may have its own children chunks. You can access each child chunk by its type to recursively construct the save file (or load it).</p>
+<p><a href="https://github.com/chickensoft-games/AutoInject">AutoInject</a> should be used to find the nearest parent save chunk in the scene tree so that the child chunk can add itself to the parent.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">SaveFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SaveFile</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;</span><span class="p">(</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="n">root</span><span class="p">:</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SaveChunk</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;</span><span class="p">(</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">onSave</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="c1">// Use root chunk to get child chunks that were added to us</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="c1">// lower in the scene tree.</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="kt">var</span><span class="w"> </span><span class="n">gameData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GameData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span><span class="n">MapData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chunk</span><span class="p">.</span><span class="n">GetChunkSaveData</span><span class="o">&lt;</span><span class="n">MapData</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="n">PlayerData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chunk</span><span class="p">.</span><span class="n">GetChunkSaveData</span><span class="o">&lt;</span><span class="n">PlayerData</span><span class="o">&gt;</span><span class="p">(),</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="n">PlayerCameraData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">chunk</span><span class="p">.</span><span class="n">GetChunkSaveData</span><span class="o">&lt;</span><span class="n">PlayerCameraData</span><span class="o">&gt;</span><span class="p">()</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="p">};</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="n">gameData</span><span class="p">;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="n">onLoad</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">      </span><span class="c1">// Break up the game data and send it to the child chunks so that</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">      </span><span class="c1">// they can load the data into the nodes they belong to.</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">      </span><span class="n">chunk</span><span class="p">.</span><span class="n">LoadChunkSaveData</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">MapData</span><span class="p">);</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">      </span><span class="n">chunk</span><span class="p">.</span><span class="n">LoadChunkSaveData</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">PlayerData</span><span class="p">);</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="n">chunk</span><span class="p">.</span><span class="n">LoadChunkSaveData</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">PlayerCameraData</span><span class="p">);</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">  </span><span class="p">),</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">  </span><span class="n">onSave</span><span class="p">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="n">GameData</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="c1">// Save the game data to disk.</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JsonSerializer</span><span class="p">.</span><span class="n">Serialize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">JsonOptions</span><span class="p">);</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">FileSystem</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="n">WriteAllTextAsync</span><span class="p">(</span><span class="n">SaveFilePath</span><span class="p">,</span><span class="w"> </span><span class="n">json</span><span class="p">);</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">  </span><span class="n">onLoad</span><span class="p">:</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">    </span><span class="c1">// Load the game data from disk.</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">FileSystem</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">SaveFilePath</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">      </span><span class="n">GD</span><span class="p">.</span><span class="n">Print</span><span class="p">(</span><span class="s">&quot;No save file to load :&#39;(&quot;</span><span class="p">);</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="k">null</span><span class="p">;</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">json</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">FileSystem</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="n">ReadAllTextAsync</span><span class="p">(</span><span class="n">SaveFilePath</span><span class="p">);</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">JsonSerializer</span><span class="p">.</span><span class="n">Deserialize</span><span class="o">&lt;</span><span class="n">GameData</span><span class="o">&gt;</span><span class="p">(</span><span class="n">json</span><span class="p">,</span><span class="w"> </span><span class="n">JsonOptions</span><span class="p">);</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="p">);</span>
+</code></pre></div>
+<p>In the future, this can be expanded on by creating an async variety. Asynchronicity would allow you to define save chunks that can split loading and saving into multiple operations, streamlining the most complex save scenarios imaginable.</p>
+<h2 id="serializing-hierarchical-state-machines">💡 Serializing Hierarchical State Machines</h2>
+<p><a href="https://github.com/chickensoft-games/LogicBlocks">LogicBlocks</a>, our hierarchical state machine implementation, is now fully serializable, thanks to the version 5 update that was just released. It integrates seamlessly with the new Introspection generator and Serialization system.</p>
+<p><a href="https://github.com/chickensoft-games/LogicBlocks">Chickensoft LogicBlocks on GitHub</a></p>
+<p>LogicBlocks 5 will now automatically preallocate states when constructed, thanks to the generated metadata that allows it to see every possible state ahead of time.</p>
+<p>:::info
+Unrelated, but the new performance updates LogicBlocks 5 receives also eliminates runtime memory allocations, except in scenarios where the number of inputs or input types exceeds the input buffer size.
+:::</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="na">[Meta, Id(&quot;serializable_logic&quot;)]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">[LogicBlock(typeof(State), Diagram = true)]</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyLogicBlock</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">LogicBlock</span><span class="o">&lt;</span><span class="n">MyLogicBlock</span><span class="p">.</span><span class="n">State</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">Transition</span><span class="w"> </span><span class="nf">GetInitialState</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">To</span><span class="o">&lt;</span><span class="n">State</span><span class="p">.</span><span class="n">PoweredOff</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="na">[Meta]</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">State</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">StateLogic</span><span class="o">&lt;</span><span class="n">State</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="na">[Meta, Id(&quot;serializable_logic_state_off&quot;)]</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">PoweredOff</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">State</span><span class="p">;</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="na">[Meta, Id(&quot;serializable_logic_state_on&quot;)]</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">PoweredOn</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">State</span><span class="p">;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="na">[Meta, Id(&quot;serializable_logic_versioned_state&quot;)]</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">VersionedState</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">State</span><span class="p">;</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">    </span><span class="na">[Meta, Version(1)]</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">Version1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">VersionedState</span><span class="p">;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">    </span><span class="na">[Meta, Version(2)]</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="n">Version2</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">VersionedState</span><span class="p">;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="p">}</span>
+</code></pre></div>
+<p>Oh — and LogicBlocks now has an <a href="/docs/logic_blocks/">all new documentation site</a>! There's never been a better time to embrace the magic and rigor of statecharts.</p>
+<h2 id="a-better-autoinject">💉 A Better AutoInject</h2>
+<p><a href="https://github.com/chickensoft-games/AutoInject">AutoInject</a> is our node-based dependency injection system. It allows you to find dependencies by searching ancestor nodes for the first node that has the dependency you're looking for. It's as simple as it sounds, at least in theory (the devil is in the implementation details).</p>
+<p><a href="https://github.com/chickensoft-games/AutoInject">Chickensoft AutoInject on GitHub</a></p>
+<p>Previously, AutoInject was built on top of <a href="https://github.com/chickensoft-games/SuperNodes">SuperNodes</a>. Now that <a href="https://github.com/chickensoft-games/SuperNodes">SuperNodes</a> has been deprecated and replaced with the new <a href="https://github.com/chickensoft-games/Introspection">Introspection</a> generator, the <a href="https://github.com/chickensoft-games/PowerUps">PowerUps</a> package (a set of mixins designed to work with AutoInject and SuperNodes) has also been deprecated. Fortunately, all of its functionality now lives inside AutoInject.</p>
+<p>Like before, you can use the new <a href="https://github.com/chickensoft-games/Introspection">Introspection</a> generator to apply mixins. But, it's even simpler now — <em>all</em> of the mixins available in AutoInject can be applied at once:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Apply all of the AutoInject mixins at once:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="na">[Meta(typeof(IAutoNode))]</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">public</span><span class="w"> </span><span class="k">partial</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">MyNode</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>That one little line above allows you to automatically bind nodes to properties, inject dependencies, provide dependencies, and use .NET-style notification callbacks and get additional lifecycle notifications that help with unit testing nodes, if that's your jam. Be sure to checkout the AutoInject repository for more details.</p>
+<h2 id="saving-loading-in-the-game-demo">🕹️ Saving &amp; Loading in the Game Demo</h2>
+<p>Of course, no long-winded blog announcing a bunch of new packages would be complete without a demo. The Chickensoft Game Demo has been updated to version 3, and now includes full state persistence and restoration, thanks to all these new tools.</p>
+<p><a href="https://github.com/chickensoft-games/GameDemo">Chickensoft GameDemo on GitHub</a></p>
+<p>If you're still fuzzy on the details, go check out the code and take a closer look. There's also nearly 300 unit tests that can help show you how any particularly part of the code works, too.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We'll close by celebrating the fact that Chickensoft has now reached a new layer of the gamedev hierarchy of needs: serialization. Now we can start solving the real problems.</p>
+<p><img alt="Maslow's hierarchy of game development" src="pyramid.jpg" /></p>
+<p>If you made it this far, thanks for reading — and happy serializing!</p>
+<p>Join our Discord: <a href="https://discord.gg/MjA6HUzzAE">https://discord.gg/MjA6HUzzAE</a></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>It's actually too late. I've already made one.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>
