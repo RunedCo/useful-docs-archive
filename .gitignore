@@ -1,0 +1,70 @@
+# Godot-specific ignores
+.godot/
+*.translation
+export_presets.cfg
+.import/
+export/
+.mono/
+data_*/
+mono_crash.*.json
+
+# C# specific
+.vs/
+.vscode/
+obj/
+bin/
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.pdb
+*.mdb
+*.sln.DotSettings.user
+.idea/
+**/.DS_Store
+
+# MkDocs specific
+site/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.cache/
+.pytest_cache/
+
+# OS-specific
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# Node.js/npm (if applicable)
+node_modules/
+npm-debug.log
+
+# Editor-specific
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/ 
